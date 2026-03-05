@@ -1,0 +1,681 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Asseto | FCU Energy Efficiency Dashboard</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <script src="https://mcp.figma.com/mcp/html-to-design/capture.js" async></script>
+  <style>
+    :root {
+      --bg: #f5f7fb;
+      --surface: #ffffff;
+      --surface-soft: #f8fafe;
+      --text: #14171f;
+      --muted: #637083;
+      --line: #e4e9f3;
+      --brand: #5f68ff;
+      --brand-2: #00bed9;
+      --good: #1eb980;
+      --warn: #ff9f43;
+      --bad: #f25858;
+      --radius-xl: 30px;
+      --radius-lg: 22px;
+      --radius-md: 16px;
+      --shadow: 0 24px 70px rgba(30, 41, 70, 0.08);
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: "Manrope", -apple-system, BlinkMacSystemFont, "SF Pro Display", sans-serif;
+      color: var(--text);
+      background:
+        radial-gradient(920px 500px at 94% -12%, rgba(95, 104, 255, 0.16), transparent 62%),
+        radial-gradient(680px 420px at -8% 30%, rgba(0, 190, 217, 0.13), transparent 60%),
+        var(--bg);
+      min-height: 100vh;
+      padding: 28px;
+    }
+
+    .canvas {
+      max-width: 1540px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 280px 1fr;
+      gap: 18px;
+    }
+
+    .panel {
+      background: color-mix(in srgb, var(--surface), transparent 8%);
+      border: 1px solid color-mix(in srgb, var(--line), white 28%);
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(16px) saturate(125%);
+      -webkit-backdrop-filter: blur(16px) saturate(125%);
+    }
+
+    .sidebar {
+      border-radius: var(--radius-xl);
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      min-height: calc(100vh - 56px);
+      position: sticky;
+      top: 28px;
+      gap: 20px;
+    }
+
+    .logo-wrap {
+      background: linear-gradient(150deg, #ffffff, #f4f7ff);
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      padding: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 92px;
+    }
+
+    .logo-wrap img {
+      max-width: 92%;
+      max-height: 60px;
+      object-fit: contain;
+    }
+
+    .menu {
+      display: grid;
+      gap: 8px;
+    }
+
+    .menu-item {
+      border: 1px solid transparent;
+      border-radius: 14px;
+      padding: 12px 14px;
+      font-size: 0.92rem;
+      font-weight: 700;
+      color: #2f3e58;
+      background: transparent;
+    }
+
+    .menu-item.active {
+      background: linear-gradient(145deg, rgba(95, 104, 255, 0.15), rgba(0, 190, 217, 0.13));
+      border-color: rgba(95, 104, 255, 0.2);
+      color: #3643d4;
+    }
+
+    .side-stat {
+      margin-top: auto;
+      border: 1px solid rgba(95, 104, 255, 0.2);
+      border-radius: 18px;
+      padding: 14px;
+      background: linear-gradient(145deg, rgba(95, 104, 255, 0.16), rgba(0, 190, 217, 0.12));
+    }
+
+    .side-stat p {
+      margin: 0;
+      font-size: 0.79rem;
+      color: #304058;
+      font-weight: 700;
+    }
+
+    .side-stat h3 {
+      margin: 8px 0 0;
+      font-size: 2rem;
+      letter-spacing: -0.02em;
+      color: #2e3ad8;
+    }
+
+    .main {
+      border-radius: var(--radius-xl);
+      padding: 18px;
+      display: grid;
+      gap: 14px;
+    }
+
+    .topbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 14px;
+      padding: 8px 4px;
+    }
+
+    .title h1 {
+      margin: 0;
+      font-size: 1.65rem;
+      letter-spacing: -0.025em;
+      font-weight: 800;
+    }
+
+    .title p {
+      margin: 4px 0 0;
+      color: var(--muted);
+      font-weight: 600;
+      font-size: 0.88rem;
+    }
+
+    .actions {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+    }
+
+    .chip,
+    .primary {
+      border-radius: 14px;
+      border: 1px solid var(--line);
+      background: var(--surface-soft);
+      color: #2e3b55;
+      font-size: 0.84rem;
+      font-weight: 700;
+      padding: 10px 12px;
+    }
+
+    .primary {
+      border: none;
+      background: linear-gradient(145deg, #5964f4, #6b77ff);
+      color: #fff;
+      padding: 10px 16px;
+    }
+
+    .hero {
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--line);
+      background: linear-gradient(135deg, #fdfdff, #f0f5ff 52%, #eefcff 100%);
+      padding: 20px;
+      display: grid;
+      grid-template-columns: 1.2fr 1fr;
+      gap: 18px;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .hero::after {
+      content: "";
+      position: absolute;
+      width: 380px;
+      height: 380px;
+      right: -120px;
+      top: -120px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(95, 104, 255, 0.2), rgba(95, 104, 255, 0));
+      pointer-events: none;
+    }
+
+    .hero h2 {
+      margin: 0;
+      font-size: 1.34rem;
+      line-height: 1.25;
+      letter-spacing: -0.015em;
+    }
+
+    .hero p {
+      margin: 8px 0 14px;
+      color: #4d5e79;
+      max-width: 560px;
+      font-weight: 600;
+      font-size: 0.9rem;
+    }
+
+    .kpi-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+    }
+
+    .kpi {
+      background: #fff;
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      padding: 10px 12px;
+    }
+
+    .kpi small {
+      color: var(--muted);
+      font-size: 0.72rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.03em;
+    }
+
+    .kpi h3 {
+      margin: 6px 0 4px;
+      font-size: 1.25rem;
+      letter-spacing: -0.02em;
+    }
+
+    .delta {
+      font-size: 0.78rem;
+      font-weight: 700;
+    }
+
+    .delta.good { color: var(--good); }
+    .delta.warn { color: var(--warn); }
+
+    .hero-card {
+      border: 1px solid #dde5f5;
+      border-radius: 16px;
+      background: #fff;
+      padding: 14px;
+      display: grid;
+      gap: 12px;
+      align-content: start;
+    }
+
+    .hero-card h4 {
+      margin: 0;
+      font-size: 0.88rem;
+      color: #435678;
+    }
+
+    .line {
+      height: 118px;
+      border-radius: 12px;
+      background: linear-gradient(180deg, rgba(95, 104, 255, 0.16), rgba(95, 104, 255, 0));
+      position: relative;
+      overflow: hidden;
+    }
+
+    .line svg {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+    }
+
+    .cards-4 {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 10px;
+    }
+
+    .stat-card {
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      padding: 12px;
+      display: grid;
+      gap: 8px;
+    }
+
+    .stat-card p {
+      margin: 0;
+      color: #546178;
+      font-size: 0.76rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+
+    .stat-card h3 {
+      margin: 0;
+      font-size: 1.42rem;
+      letter-spacing: -0.02em;
+    }
+
+    .bar {
+      height: 8px;
+      border-radius: 999px;
+      background: #edf2fd;
+      overflow: hidden;
+    }
+
+    .bar > span {
+      display: block;
+      height: 100%;
+      border-radius: inherit;
+      background: linear-gradient(90deg, var(--brand), var(--brand-2));
+    }
+
+    .middle {
+      display: grid;
+      grid-template-columns: 1.25fr 1fr;
+      gap: 12px;
+    }
+
+    .tile {
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      padding: 14px;
+      display: grid;
+      gap: 12px;
+    }
+
+    .tile-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 8px;
+    }
+
+    .tile h3 {
+      margin: 0;
+      font-size: 1rem;
+      letter-spacing: -0.01em;
+    }
+
+    .tile small {
+      color: var(--muted);
+      font-weight: 700;
+      font-size: 0.76rem;
+    }
+
+    .legend {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .legend span {
+      font-size: 0.75rem;
+      color: #495b77;
+      font-weight: 700;
+      background: #f2f6ff;
+      border: 1px solid #e0e7f7;
+      border-radius: 999px;
+      padding: 5px 8px;
+    }
+
+    .heatmap {
+      display: grid;
+      grid-template-columns: repeat(8, 1fr);
+      gap: 6px;
+    }
+
+    .heat {
+      height: 36px;
+      border-radius: 10px;
+      border: 1px solid #dfe7f6;
+      background: #f4f7ff;
+    }
+
+    .h1 { background: #e5f7f2; }
+    .h2 { background: #d5f2e6; }
+    .h3 { background: #f8f0d8; }
+    .h4 { background: #ffe0cc; }
+    .h5 { background: #ffd1d1; }
+
+    .zone-table {
+      display: grid;
+      gap: 8px;
+    }
+
+    .zone-row {
+      display: grid;
+      grid-template-columns: 1.4fr 1fr 1fr 1fr;
+      gap: 8px;
+      align-items: center;
+      background: #f9fbff;
+      border: 1px solid #e6edf9;
+      border-radius: 12px;
+      padding: 9px 10px;
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: #3a4c6a;
+    }
+
+    .status {
+      border-radius: 999px;
+      padding: 4px 8px;
+      justify-self: start;
+      font-size: 0.72rem;
+      font-weight: 800;
+      letter-spacing: 0.02em;
+    }
+
+    .ok { background: #e8faf2; color: #0b8f5f; }
+    .warning { background: #fff4e4; color: #bb7307; }
+    .critical { background: #ffe9e9; color: #bc2c2c; }
+
+    .bottom {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 12px;
+    }
+
+    .donut {
+      width: 108px;
+      height: 108px;
+      border-radius: 50%;
+      background: conic-gradient(var(--brand) 0 68%, #e9eefb 68%);
+      display: grid;
+      place-items: center;
+      margin: 4px auto;
+    }
+
+    .donut::before {
+      content: "68%";
+      width: 72px;
+      height: 72px;
+      border-radius: 50%;
+      background: white;
+      display: grid;
+      place-items: center;
+      font-weight: 800;
+      color: #3e4dcf;
+    }
+
+    .mini-list {
+      display: grid;
+      gap: 8px;
+      font-size: 0.78rem;
+      font-weight: 700;
+      color: #415372;
+    }
+
+    .mini-list div {
+      display: flex;
+      justify-content: space-between;
+      background: #f8fbff;
+      border: 1px solid #e2eaf8;
+      border-radius: 10px;
+      padding: 8px 10px;
+    }
+
+    @media (max-width: 1220px) {
+      .canvas { grid-template-columns: 1fr; }
+      .sidebar { position: static; min-height: auto; }
+      .hero { grid-template-columns: 1fr; }
+      .cards-4 { grid-template-columns: repeat(2, 1fr); }
+      .middle { grid-template-columns: 1fr; }
+      .bottom { grid-template-columns: 1fr; }
+    }
+
+    @media (max-width: 760px) {
+      body { padding: 14px; }
+      .main { padding: 12px; }
+      .cards-4 { grid-template-columns: 1fr; }
+      .kpi-grid { grid-template-columns: 1fr; }
+      .zone-row { grid-template-columns: 1fr 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <div class="canvas">
+    <aside class="sidebar panel">
+      <div class="logo-wrap">
+        <img src="./Asseto%20Logo.png" alt="Asseto Logo" />
+      </div>
+      <nav class="menu">
+        <div class="menu-item active">Overview</div>
+        <div class="menu-item">FCU Performance</div>
+        <div class="menu-item">Energy Analytics</div>
+        <div class="menu-item">Predictive Maintenance</div>
+        <div class="menu-item">Comfort Index</div>
+        <div class="menu-item">Carbon & Cost</div>
+        <div class="menu-item">Settings</div>
+      </nav>
+      <div class="side-stat">
+        <p>Plant Efficiency Score</p>
+        <h3>92.4</h3>
+      </div>
+    </aside>
+
+    <main class="main panel">
+      <div class="topbar">
+        <div class="title">
+          <h1>Asseto Building Management Dashboard</h1>
+          <p>FCU energy intelligence across Tower A, Tower B, and mixed-use podium</p>
+        </div>
+        <div class="actions">
+          <div class="chip">Scope: All Buildings</div>
+          <div class="chip">Last Update: 09:42 AM</div>
+          <div class="primary">Run Optimization Plan</div>
+        </div>
+      </div>
+
+      <section class="hero">
+        <div>
+          <h2>Smarter FCU operation with Apple-like clarity and instant actionability.</h2>
+          <p>Real-time performance now indicates reduced FCU kWh consumption while preserving comfort band stability. Optimization recommendations focus on fan speed staging, chilled-water reset, and occupancy-synced control.</p>
+          <div class="kpi-grid">
+            <div class="kpi">
+              <small>Total FCU Energy</small>
+              <h3>2.84 MWh</h3>
+              <div class="delta good">-12.6% vs last week</div>
+            </div>
+            <div class="kpi">
+              <small>kW / RT</small>
+              <h3>0.72</h3>
+              <div class="delta good">Best in 30 days</div>
+            </div>
+            <div class="kpi">
+              <small>Comfort Compliance</small>
+              <h3>96.1%</h3>
+              <div class="delta warn">2 zones drifting warm</div>
+            </div>
+          </div>
+        </div>
+        <div class="hero-card">
+          <h4>24-Hour FCU Efficiency Curve</h4>
+          <div class="line">
+            <svg viewBox="0 0 400 140" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <path d="M0 96C20 92 34 90 54 84C74 78 88 60 108 56C128 52 141 70 162 69C184 67 203 36 223 33C243 29 260 42 280 48C300 55 316 81 336 83C356 86 374 72 400 58" stroke="#5f68ff" stroke-width="4" stroke-linecap="round"/>
+              <path d="M0 113C21 111 33 101 53 96C74 91 91 101 110 100C130 99 144 84 164 80C185 75 204 82 225 75C245 67 260 52 279 49C301 46 317 53 337 52C356 50 378 40 400 37" stroke="#00bed9" stroke-width="3" opacity="0.75" stroke-linecap="round"/>
+            </svg>
+          </div>
+          <div class="legend">
+            <span>Efficiency Index</span>
+            <span>Occupancy Load</span>
+            <span>Target Band</span>
+          </div>
+        </div>
+      </section>
+
+      <section class="cards-4">
+        <article class="stat-card">
+          <p>Active FCU Units</p>
+          <h3>184 / 201</h3>
+          <div class="bar"><span style="width: 91%"></span></div>
+        </article>
+        <article class="stat-card">
+          <p>Avg Supply Temp</p>
+          <h3>12.1°C</h3>
+          <div class="bar"><span style="width: 62%"></span></div>
+        </article>
+        <article class="stat-card">
+          <p>Fan Speed Optimization</p>
+          <h3>87.5%</h3>
+          <div class="bar"><span style="width: 87.5%"></span></div>
+        </article>
+        <article class="stat-card">
+          <p>Anomaly Incidents</p>
+          <h3>5 Today</h3>
+          <div class="bar"><span style="width: 24%; background: linear-gradient(90deg, #f7b24a, #f25858);"></span></div>
+        </article>
+      </section>
+
+      <section class="middle">
+        <article class="tile">
+          <div class="tile-head">
+            <div>
+              <h3>FCU Zone Efficiency Heatmap</h3>
+              <small>Detected inefficiency concentration during 2:00 PM peak occupancy window</small>
+            </div>
+            <div class="chip">Live</div>
+          </div>
+          <div class="heatmap">
+            <div class="heat h1"></div><div class="heat h2"></div><div class="heat h2"></div><div class="heat h3"></div><div class="heat h4"></div><div class="heat h2"></div><div class="heat h1"></div><div class="heat h1"></div>
+            <div class="heat h2"></div><div class="heat h2"></div><div class="heat h3"></div><div class="heat h4"></div><div class="heat h5"></div><div class="heat h3"></div><div class="heat h2"></div><div class="heat h1"></div>
+            <div class="heat h1"></div><div class="heat h2"></div><div class="heat h2"></div><div class="heat h3"></div><div class="heat h4"></div><div class="heat h3"></div><div class="heat h2"></div><div class="heat h1"></div>
+          </div>
+          <div class="legend">
+            <span>Green: Efficient</span>
+            <span>Amber: Watch</span>
+            <span>Red: High Wastage</span>
+          </div>
+        </article>
+
+        <article class="tile">
+          <div class="tile-head">
+            <div>
+              <h3>Critical Alerts & Actions</h3>
+              <small>Action-based queue for engineering team</small>
+            </div>
+            <div class="chip">8 Open</div>
+          </div>
+          <div class="mini-list">
+            <div><span>FCU-B2-143 high return temp</span><span class="status warning">Investigate</span></div>
+            <div><span>FCU-A7-021 valve hunting</span><span class="status critical">Urgent</span></div>
+            <div><span>Pump loop delta-T low</span><span class="status warning">Tune</span></div>
+            <div><span>AHU-02 schedule mismatch</span><span class="status ok">Automated Fix</span></div>
+            <div><span>FCU-P3-066 excess fan runtime</span><span class="status warning">Adjust</span></div>
+          </div>
+        </article>
+      </section>
+
+      <section class="bottom">
+        <article class="tile">
+          <div class="tile-head">
+            <div>
+              <h3>Zone-by-Zone FCU Snapshot</h3>
+              <small>Efficiency, comfort, and maintenance status</small>
+            </div>
+          </div>
+          <div class="zone-table">
+            <div class="zone-row"><span>Level 7 - Offices East</span><span>0.68 kW/RT</span><span>23.1°C</span><span class="status ok">Healthy</span></div>
+            <div class="zone-row"><span>Level 12 - Co-working</span><span>0.79 kW/RT</span><span>24.3°C</span><span class="status warning">Tune</span></div>
+            <div class="zone-row"><span>Retail Podium - South</span><span>0.84 kW/RT</span><span>25.0°C</span><span class="status critical">Hotspot</span></div>
+            <div class="zone-row"><span>Level 3 - Meeting Suites</span><span>0.71 kW/RT</span><span>22.6°C</span><span class="status ok">Healthy</span></div>
+          </div>
+        </article>
+
+        <article class="tile">
+          <div class="tile-head">
+            <div>
+              <h3>Maintenance Readiness</h3>
+              <small>Predicted failure probability (next 14 days)</small>
+            </div>
+          </div>
+          <div class="donut"></div>
+          <div class="mini-list">
+            <div><span>Filters to replace</span><span>12</span></div>
+            <div><span>Bearings nearing limit</span><span>5</span></div>
+            <div><span>Valve actuator checks</span><span>9</span></div>
+            <div><span>Predicted downtime risk</span><span>Low</span></div>
+          </div>
+        </article>
+
+        <article class="tile">
+          <div class="tile-head">
+            <div>
+              <h3>Carbon & Cost Impact</h3>
+              <small>Verified savings from optimization controls</small>
+            </div>
+          </div>
+          <div class="mini-list">
+            <div><span>Daily Energy Cost</span><span>USD 1,942</span></div>
+            <div><span>Projected Monthly Savings</span><span>USD 16,830</span></div>
+            <div><span>CO2 Reduction</span><span>1.84 t/day</span></div>
+            <div><span>ROI on Retro-commissioning</span><span>7.2 months</span></div>
+          </div>
+        </article>
+      </section>
+    </main>
+  </div>
+</body>
+</html>
