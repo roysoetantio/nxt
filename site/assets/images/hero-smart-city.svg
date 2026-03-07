@@ -1,0 +1,37 @@
+<svg width="1200" height="900" viewBox="0 0 1200 900" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1200" height="900" rx="36" fill="#F9FBFF"/>
+  <rect x="42" y="42" width="1116" height="816" rx="30" fill="white" stroke="#E6E8F0"/>
+  <path d="M141 664C332 548 468 533 632 568C768 597 904 667 1056 656" stroke="#D8DEFF" stroke-width="2"/>
+  <path d="M139 706C322 592 473 578 631 615C783 650 899 731 1058 716" stroke="#E9EDFF" stroke-width="2"/>
+  <rect x="154" y="362" width="142" height="252" rx="16" fill="#FCFDFF" stroke="#DCE4FF"/>
+  <rect x="179" y="390" width="40" height="197" rx="6" fill="#E9EDFF"/>
+  <rect x="231" y="420" width="40" height="167" rx="6" fill="#D8DEFF"/>
+  <rect x="344" y="284" width="188" height="328" rx="18" fill="#FDFEFF" stroke="#DCE4FF"/>
+  <rect x="378" y="325" width="54" height="232" rx="8" fill="#EEF2FF"/>
+  <rect x="446" y="374" width="54" height="183" rx="8" fill="#DDE4FF"/>
+  <rect x="584" y="318" width="160" height="294" rx="18" fill="#FFFFFF" stroke="#DCE4FF"/>
+  <rect x="613" y="356" width="46" height="209" rx="8" fill="#EEF2FF"/>
+  <rect x="670" y="389" width="46" height="176" rx="8" fill="#DCE4FF"/>
+  <rect x="781" y="234" width="228" height="378" rx="18" fill="#FFFFFF" stroke="#DCE4FF"/>
+  <rect x="815" y="285" width="62" height="268" rx="10" fill="#EEF2FF"/>
+  <rect x="892" y="347" width="72" height="206" rx="10" fill="#D8DEFF"/>
+  <rect x="129" y="614" width="944" height="42" rx="21" fill="#F1F5FF" stroke="#E6E8F0"/>
+  <circle cx="225" cy="520" r="10" fill="#5F68FF"/>
+  <circle cx="437" cy="470" r="10" fill="#5F68FF"/>
+  <circle cx="665" cy="436" r="10" fill="#5F68FF"/>
+  <circle cx="920" cy="392" r="10" fill="#5F68FF"/>
+  <path d="M225 520L437 470L665 436L920 392" stroke="#5F68FF" stroke-width="4" stroke-linecap="round" stroke-dasharray="1 14"/>
+  <path d="M225 520C269 502 346 470 437 470" stroke="#B4C0FF" stroke-width="18" stroke-linecap="round" opacity="0.18"/>
+  <path d="M437 470C513 455 586 441 665 436" stroke="#B4C0FF" stroke-width="18" stroke-linecap="round" opacity="0.18"/>
+  <path d="M665 436C739 422 821 410 920 392" stroke="#B4C0FF" stroke-width="18" stroke-linecap="round" opacity="0.18"/>
+  <rect x="160" y="150" width="218" height="106" rx="18" fill="white" stroke="#E6E8F0"/>
+  <text x="192" y="194" fill="#475569" font-family="Inter, Arial, sans-serif" font-size="24" font-weight="700">City Signal</text>
+  <text x="192" y="229" fill="#5F68FF" font-family="Inter, Arial, sans-serif" font-size="34" font-weight="700">98.4%</text>
+  <rect x="743" y="126" width="292" height="86" rx="18" fill="white" stroke="#E6E8F0"/>
+  <rect x="776" y="160" width="102" height="14" rx="7" fill="#D8DEFF"/>
+  <rect x="894" y="160" width="108" height="14" rx="7" fill="#5F68FF"/>
+  <rect x="745" y="696" width="270" height="84" rx="18" fill="white" stroke="#E6E8F0"/>
+  <path d="M780 746C803 726 822 716 846 728C871 740 885 736 905 716C925 696 953 694 980 718" stroke="#5F68FF" stroke-width="6" stroke-linecap="round"/>
+  <circle cx="846" cy="728" r="8" fill="#5F68FF"/>
+  <circle cx="905" cy="716" r="8" fill="#5F68FF"/>
+</svg>
